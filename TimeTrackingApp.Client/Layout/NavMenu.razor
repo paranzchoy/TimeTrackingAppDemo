@@ -14,6 +14,7 @@
             <FluentNavLink Href="auth" Icon="@(new Icons.Regular.Size20.LockClosedKey())" IconColor="Color.Accent">Auth Required</FluentNavLink>
             <AuthorizeView>
                 <Authorized>
+                    <FluentNavLink Href="/timelogs" Icon="@(new Icons.Regular.Size20.LockClosedKey())" IconColor="Color.Accent">Time Logs</FluentNavLink>
                     <FluentNavLink Href="Account/Manage">@context.User.Identity?.Name</FluentNavLink>
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken />

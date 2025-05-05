@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="@Assets["TimeTrackingApp.styles.css"]" />
     <ImportMap />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <HeadOutlet @rendermode="PageRenderMode" />
+    <HeadOutlet @rendermode="RenderModeForPage" />
 </head>
 
 <body>
-    <Routes @rendermode="PageRenderMode" />
+    <Routes @rendermode="RenderModeForPage" />
     <script src="_framework/blazor.web.js"></script>
+    <script src="_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.lib.module.js" type="module" async></script>
 </body>
 
 </html>
@@ -23,6 +24,8 @@
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
-    private IComponentRenderMode? PageRenderMode =>
-        HttpContext.AcceptsInteractiveRouting() ? InteractiveAuto : null;
+
+    private IComponentRenderMode? RenderModeForPage => HttpContext.AcceptsInteractiveRouting()
+        ? new InteractiveAutoRenderMode(prerender: false)
+        : null;
 }
