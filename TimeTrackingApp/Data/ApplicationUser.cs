@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace TimeTrackingApp.Data
-{
-    // Add profile data for application users by adding properties to the ApplicationUser class
-    public class ApplicationUser : IdentityUser
-    {
-    }
+namespace TimeTrackingApp.Data;
 
+public class ApplicationUser : IdentityUser
+{
+    public virtual ICollection<TimeLog> TimeLogs { get; set; } = new List<TimeLog>();
 }
