@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FluentUI.AspNetCore.Components;
+using Microsoft.OpenApi.Models;
 using TimeTrackingApp.Client.Pages;
 using TimeTrackingApp.Components;
 using TimeTrackingApp.Components.Account;
@@ -15,6 +16,14 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents()
     .AddAuthenticationStateSerialization();
 builder.Services.AddFluentUIComponents();
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TimeTrackingApp API", Version = "v1" });
+    c.EnableAnnotations();
+});
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
@@ -56,6 +65,7 @@ else
 }
 
 app.UseHttpsRedirection();
+app.MapControllers();
 
 app.UseAntiforgery();
 
@@ -67,5 +77,8 @@ app.MapRazorComponents<App>()
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.Run();
