@@ -29,7 +29,6 @@ public partial class TimelogsPage : ComponentBase
     private UserDetailsDto? _User;
     private List<TimeLogListDto> _timelogs = new();
 
-
     protected override async Task OnParametersSetAsync()
     {
         await LoadDataAsync();

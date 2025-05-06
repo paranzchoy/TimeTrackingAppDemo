@@ -59,7 +59,7 @@ else
                         <td>@log.TimeIn.ToString("yyyy-MM-dd")</td>
                         <td>@log.TimeIn.ToString("hh:mm tt")</td>
                         <td>
-                            @(log.TimeOut?.ToString("hh:mm tt") ?? "---")
+                            @(log.TimeOut?.ToString("hh:mm tt") ?? "—")
                         </td>
                         <td>@(log.TotalHours?.ToString("F2") ?? "—")</td>
                         <td>
@@ -80,7 +80,7 @@ else
                     <td></td>
                     <td></td>
                     <td><b>Total Hours =</b></td>
-                    <td>@_timelogs.Sum(e => e.TotalHours)</td>
+                    <td>@_timelogs.Sum(e => e.TotalHours)?.ToString("F2")</td>
                 </tr>
             </tbody>
         </table>
