@@ -30,6 +30,8 @@ public partial class TimeInAddDialog : ComponentBase, IDialogContentComponent<Ti
 
     protected async Task OnSubmit()
     {
+        if (_IsSubmitting) return;
+
         Content.TimeIn = SelectedTimeInDateOnly.ToDateTime(SelectedTimeInTimeOnly);
 
         _IsSubmitting = true;
