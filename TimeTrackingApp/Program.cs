@@ -91,4 +91,14 @@ app.MapAdditionalIdentityEndpoints();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetRequiredService<ApplicationDbContext>();
+
+    //DELETE DATABASE ONLY IF NEEDED
+    //dbContext.Database.EnsureDeleted();
+    dbContext.Database.Migrate();
+}
+
 app.Run();
