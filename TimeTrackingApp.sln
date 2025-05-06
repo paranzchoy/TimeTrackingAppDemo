@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTrackingApp", "TimeTrackingApp\TimeTrackingApp.csproj", "{0D51B520-DDA6-45CD-A9DB-7AFE5DA5E8FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTrackingApp.Client", "TimeTrackingApp.Client\TimeTrackingApp.Client.csproj", "{603006DF-1503-4401-8F68-9761CFD904AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTrackingApp.Shared", "..\TimeTrackingApp.Shared\TimeTrackingApp.Shared.csproj", "{DBE458B4-D10D-4433-B92C-CD3331D07B58}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testings", "Testings", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTrackingApp.Shared", "TimeTrackingApp.Shared\TimeTrackingApp.Shared.csproj", "{624129E6-1C53-9221-DABB-3222473032C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +25,10 @@ Global
 		{603006DF-1503-4401-8F68-9761CFD904AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{603006DF-1503-4401-8F68-9761CFD904AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{603006DF-1503-4401-8F68-9761CFD904AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBE458B4-D10D-4433-B92C-CD3331D07B58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBE458B4-D10D-4433-B92C-CD3331D07B58}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBE458B4-D10D-4433-B92C-CD3331D07B58}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBE458B4-D10D-4433-B92C-CD3331D07B58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{624129E6-1C53-9221-DABB-3222473032C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{624129E6-1C53-9221-DABB-3222473032C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{624129E6-1C53-9221-DABB-3222473032C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{624129E6-1C53-9221-DABB-3222473032C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

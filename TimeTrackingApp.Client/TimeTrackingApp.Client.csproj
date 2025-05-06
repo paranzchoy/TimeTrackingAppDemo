@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\TimeTrackingApp.Shared\TimeTrackingApp.Shared.csproj" />
+    <ProjectReference Include="..\TimeTrackingApp.Shared\TimeTrackingApp.Shared.csproj" />
   </ItemGroup>
 
 </Project>

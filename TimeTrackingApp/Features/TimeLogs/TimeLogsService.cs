@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Refit;
 using TimeTrackingApp.Data;
-using TimeTrackingApp.Shared.Clients.Timelogs;
+using TimeTrackingApp.Shared.Clients;
 using TimeTrackingApp.Shared.Dtos.Timelogs;
 
 namespace TimeTrackingApp.Features.TimeLogs;

@@ -8,7 +8,8 @@ using TimeTrackingApp.Components;
 using TimeTrackingApp.Components.Account;
 using TimeTrackingApp.Data;
 using TimeTrackingApp.Features.TimeLogs;
-using TimeTrackingApp.Shared.Clients.Timelogs;
+using TimeTrackingApp.Features.Users;
+using TimeTrackingApp.Shared.Clients;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuth
 
 builder.Services.AddMudServices();
 builder.Services.AddScoped<ITimelogsApi, TimeLogsService>();
+builder.Services.AddScoped<IUsersApi, UserService>();
 
 
 builder.Services.AddAuthorization();

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.FluentUI.AspNetCore.Components;
 using MudBlazor.Services;
 using Refit;
-using TimeTrackingApp.Shared.Clients.Timelogs;
+using TimeTrackingApp.Shared.Clients;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.Services.AddFluentUIComponents();

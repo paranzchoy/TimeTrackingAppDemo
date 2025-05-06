@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\TimeTrackingApp.Shared\TimeTrackingApp.Shared.csproj" />
     <ProjectReference Include="..\TimeTrackingApp.Client\TimeTrackingApp.Client.csproj" />
+    <ProjectReference Include="..\TimeTrackingApp.Shared\TimeTrackingApp.Shared.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />

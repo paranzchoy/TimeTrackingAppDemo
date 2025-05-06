@@ -5,7 +5,7 @@ using System.Security.Claims;
 using TimeTrackingApp.Client.Features.TimeLogs.AddTimeIn;
 using TimeTrackingApp.Client.Features.TimeLogs.EditTimeLog;
 using TimeTrackingApp.Client.Features.TimeLogs.RemoveTimeLog;
-using TimeTrackingApp.Shared.Clients.Timelogs;
+using TimeTrackingApp.Shared.Clients;
 using TimeTrackingApp.Shared.Dtos.Timelogs;
 using TimeTrackingApp.Shared.Dtos.Users;
 

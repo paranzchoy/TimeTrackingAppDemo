@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
-using TimeTrackingApp.Shared.Clients.Timelogs;
+using TimeTrackingApp.Shared.Clients;
 
 namespace TimeTrackingApp.Client.Features.TimeLogs.RemoveTimeLog;
 
