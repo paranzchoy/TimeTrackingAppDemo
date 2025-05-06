@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -23,5 +23,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.3.0" />
+    <PackageReference Include="MudBlazor" Version="8.3.0" />
   </ItemGroup>
 </Project>
