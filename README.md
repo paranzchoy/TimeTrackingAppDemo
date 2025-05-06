@@ -12,3 +12,17 @@
 9. (Optional) Click the `Delete` icon button to delete time log
 10. Click `All User` in the side bar. All registered user will appear
 11. Click the `Expand` icon on left side of the table row to view the timelogs of a user
+
+## Features
+1. My Time logs page - View, add, edit, remove time logs
+2. All Users page - view users, view user time log
+
+## Tech stack
+1. Blazor with FluentUI and MudBlazor
+2. ASP.NET Core
+3. SQL Server
+
+## Optional tasks not implemented
+1. .NET Aspire integration
+2. Redis
+3. TDD project
