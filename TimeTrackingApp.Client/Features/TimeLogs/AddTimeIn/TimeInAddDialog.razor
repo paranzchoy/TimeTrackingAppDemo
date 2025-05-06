@@ -1,0 +1,40 @@
+﻿<FluentDialogHeader>
+    <h4>Add time in</h4>
+</FluentDialogHeader>
+
+<FluentDialogBody>
+    <EditForm Model="Content" OnValidSubmit="OnSubmit">
+        <!-- DATES -->
+        <FluentStack>
+            <div>
+                <FluentDatePicker Label="Date"
+                                  Appearance="FluentInputAppearance.Filled"
+                                  Class="border border-secondary rounded-3 w-100 mb-2"
+                                  Value="@SelectedTimeInDateOnly.ToDateTime()"
+                                  ValueChanged="@(e => SelectedTimeInDateOnly = e.ToDateOnly())"
+                                  data-cy="timelog-date-field" />
+            </div>
+
+            <div>
+                <FluentTimePicker Label="Time (In)"
+                                  Appearance="FluentInputAppearance.Filled"
+                                  Class="border border-secondary rounded-3 mb-2"
+                                  Value="@SelectedTimeInTimeOnly.ToDateTime()"
+                                  ValueChanged="@(e => SelectedTimeInTimeOnly = e.ToTimeOnly())"
+                                  data-cy="timelog-time-field" />
+            </div>
+        </FluentStack>
+
+        <!-- BUTTONS -->
+        <div class="d-flex justify-content-end gap-2">
+            <FluentButton Appearance="Appearance.Outline" OnClick="CloseDialog">
+                Cancel
+            </FluentButton>
+            <FluentButton Appearance="Appearance.Accent" Type="ButtonType.Submit" Loading="_IsSubmitting">
+                Add time in
+            </FluentButton>
+        </div>
+    </EditForm>
+</FluentDialogBody>
+
+<FluentDialogFooter Visible="false" />

@@ -2,10 +2,13 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FluentUI.AspNetCore.Components;
-using TimeTrackingApp.Client.Pages;
+using Microsoft.OpenApi.Models;
+using MudBlazor.Services;
 using TimeTrackingApp.Components;
 using TimeTrackingApp.Components.Account;
 using TimeTrackingApp.Data;
+using TimeTrackingApp.Features.TimeLogs;
+using TimeTrackingApp.Shared.Clients.Timelogs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,14 +16,27 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents()
-    .AddAuthenticationStateSerialization();
+    .AddAuthenticationStateSerialization(options => options.SerializeAllClaims = true);
 builder.Services.AddFluentUIComponents();
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TimeTrackingApp API", Version = "v1" });
+    c.EnableAnnotations();
+});
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
+builder.Services.AddMudServices();
+builder.Services.AddScoped<ITimelogsApi, TimeLogsService>();
+
+
+builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = IdentityConstants.ApplicationScheme;
@@ -33,7 +49,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services
+    .AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
@@ -55,9 +73,11 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseAntiforgery();
+app.UseHttpsRedirection();
+app.MapControllers();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
@@ -67,5 +87,8 @@ app.MapRazorComponents<App>()
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.Run();
