@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TimeTrackingApp.Data;
+using TimeTrackingApp.Shared.Dtos.Timelogs;
 
 namespace TimeTrackingApp.Features.TimeLogs;
 
@@ -20,28 +21,65 @@ public class TimeLogsController : ControllerBase
         _db = context;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<TimeLog>>> GetTimeLogs()
+    [HttpGet("{userId}")]
+    public async Task<ActionResult<IEnumerable<TimeLogListDto>>> GetTimeLogs(string userId)
     {
-        return await _db.TimeLogs.ToListAsync();
-    }
+        var timelogs = await _db.TimeLogs
+            .Where(e => e.UserId == userId)
+            .ToListAsync();
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<TimeLog>> GetTimeLog(int id)
-    {
-        var timeLog = await _db.TimeLogs.FindAsync(id);
-
-        if (timeLog == null)
+        var dtos = timelogs.Select(e => new TimeLogListDto
         {
-            return NotFound();
-        }
+            TimeLogId = e.TimeLogId,
+            UserId = e.UserId,
+            TimeIn = e.TimeIn,
+            TimeOut = e.TimeOut,
+            TotalHours = e.TotalHours,
+        }).ToList();
 
-        return timeLog;
+        return Ok(dtos);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutTimeLog(int id, TimeLog timeLog)
+    //[HttpGet("{id}")]
+    //public async Task<ActionResult<TimeLog>> GetTimeLog(int id)
+    //{
+    //    var timeLog = await _db.TimeLogs.FindAsync(id);
+
+    //    if (timeLog == null)
+    //    {
+    //        return NotFound();
+    //    }
+
+    //    return timeLog;
+    //}
+
+    [HttpPost]
+    public async Task<ActionResult<TimeLog>> CreateTimeLog(TimeLogCreateDto dto)
     {
+        var timeLog = new TimeLog
+        {
+            UserId = dto.UserId,
+            TimeIn = dto.TimeIn,
+            TimeOut = dto.TimeOut,
+        };
+
+        _db.TimeLogs.Add(timeLog);
+        await _db.SaveChangesAsync();
+
+        return CreatedAtAction("GetTimeLog", new { id = timeLog.TimeLogId }, timeLog);
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> UpdateTimeLog(int id, TimeLogEditDto dto)
+    {
+        var timeLog = new TimeLog
+        {
+            TimeLogId = dto.TimeLogId,
+            UserId = dto.UserId,
+            TimeIn = dto.TimeIn,
+            TimeOut = dto.TimeOut,
+        };
+
         if (id != timeLog.TimeLogId)
         {
             return BadRequest();
@@ -68,14 +106,7 @@ public class TimeLogsController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost]
-    public async Task<ActionResult<TimeLog>> PostTimeLog(TimeLog timeLog)
-    {
-        _db.TimeLogs.Add(timeLog);
-        await _db.SaveChangesAsync();
 
-        return CreatedAtAction("GetTimeLog", new { id = timeLog.TimeLogId }, timeLog);
-    }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteTimeLog(int id)

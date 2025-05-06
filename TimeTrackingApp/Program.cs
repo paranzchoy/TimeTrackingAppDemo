@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.FluentUI.AspNetCore.Components;
 using Microsoft.OpenApi.Models;
-using TimeTrackingApp.Client.Pages;
+using MudBlazor.Services;
 using TimeTrackingApp.Components;
 using TimeTrackingApp.Components.Account;
 using TimeTrackingApp.Data;
+using TimeTrackingApp.Features.TimeLogs;
+using TimeTrackingApp.Shared.Clients.Timelogs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents()
-    .AddAuthenticationStateSerialization();
+    .AddAuthenticationStateSerialization(options => options.SerializeAllClaims = true);
 builder.Services.AddFluentUIComponents();
 
 builder.Services.AddControllers();
@@ -30,6 +32,11 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
+builder.Services.AddMudServices();
+builder.Services.AddScoped<ITimelogsApi, TimeLogsService>();
+
+
+builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = IdentityConstants.ApplicationScheme;
@@ -42,7 +49,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services
+    .AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
@@ -64,10 +73,11 @@ else
     app.UseHsts();
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseAntiforgery();
 app.UseHttpsRedirection();
 app.MapControllers();
-
-app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()

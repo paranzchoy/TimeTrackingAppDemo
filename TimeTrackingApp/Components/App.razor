@@ -5,16 +5,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
+    <link rel="stylesheet" href="@Assets["bootstrap/bootstrap.min.css"]" />
     <link rel="stylesheet" href="@Assets["app.css"]" />
     <link rel="stylesheet" href="@Assets["TimeTrackingApp.styles.css"]" />
     <ImportMap />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <HeadOutlet @rendermode="PageRenderMode" />
+    <HeadOutlet @rendermode="RenderModeForPage" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 </head>
 
 <body>
-    <Routes @rendermode="PageRenderMode" />
+    <Routes @rendermode="RenderModeForPage" />
     <script src="_framework/blazor.web.js"></script>
+    <script src="_content/Microsoft.FluentUI.AspNetCore.Components/Microsoft.FluentUI.AspNetCore.Components.lib.module.js" type="module" async></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 </body>
 
 </html>
@@ -23,6 +27,8 @@
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
-    private IComponentRenderMode? PageRenderMode =>
-        HttpContext.AcceptsInteractiveRouting() ? InteractiveAuto : null;
+
+    private IComponentRenderMode? RenderModeForPage => HttpContext.AcceptsInteractiveRouting()
+        ? new InteractiveAutoRenderMode(prerender: false)
+        : null;
 }
