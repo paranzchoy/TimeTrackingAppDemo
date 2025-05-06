@@ -1,19 +1,22 @@
-﻿@page "/timelogs"
+﻿@page "/"
+@page "/timelogs"
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 
 <h3>My Time Logs</h3>
 
-@if (_timelogs == null)
+@if (_isLoading)
 {
-    <p><em>Loading...</em></p>
+    <FluentProgressRing />
 }
 else if (!_timelogs.Any())
 {
-    <div class="d-flex justify-content-between align-items-center gap-3 mt-5 mb-5">
+    <div class="d-flex justify-content-between align-items-center gap-3">
         <div class="hstack align-items-center gap-3">
             <FluentButton Appearance="Appearance.Accent"
-                          IconStart="@(new Icons.Regular.Size20.Add())">
+            IconStart="@(new Icons.Regular.Size20.Add())"
+            OnClick="ShowTimeInAddDialog"
+            data-cy="add-timelog-button">
                 Add timelog
             </FluentButton>
         </div>
@@ -24,35 +27,62 @@ else if (!_timelogs.Any())
 }
 else
 {
-    <div class="d-flex justify-content-between align-items-center gap-3 mt-5 mb-5">
+    <div class="d-flex justify-content-between align-items-center gap-3">
         <div class="hstack align-items-center gap-3">
             <FluentButton Appearance="Appearance.Accent"
-                          IconStart="@(new Icons.Regular.Size20.Add())">
+            IconStart="@(new Icons.Regular.Size20.Add())"
+            OnClick="ShowTimeInAddDialog"
+            data-cy="add-timelog-button">
                 Add timelog
             </FluentButton>
         </div>
     </div>
     <hr />
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Time In</th>
-                <th>Time Out</th>
-                <th>Total Hours</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var log in _timelogs)
-            {
+    <div class="table-responsive">
+        <table class="table table-striped table-borderless table-hover align-middle">
+            <thead>
                 <tr>
-                    <td>@log.TimeIn.ToString("yyyy-MM-dd")</td>
-                    <td>@log.TimeIn.ToString("hh:mm tt")</td>
-                    <td>@(log.TimeOut?.ToString("hh:mm tt") ?? "—")</td>
-                    <td>@(log.TotalHours?.ToString("F2") ?? "—")</td>
+                    <th>User Id</th>
+                    <th>Date</th>
+                    <th>Time In</th>
+                    <th>Time Out</th>
+                    <th>Sub Total hours</th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var log in _timelogs)
+                {
+                    <tr>
+                        <td>@log.UserId</td>
+                        <td>@log.TimeIn.ToString("yyyy-MM-dd")</td>
+                        <td>@log.TimeIn.ToString("hh:mm tt")</td>
+                        <td>
+                            @(log.TimeOut?.ToString("hh:mm tt") ?? "---")
+                        </td>
+                        <td>@(log.TotalHours?.ToString("F2") ?? "—")</td>
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <FluentButton OnClick="(() => ShowEditDialog(log))">
+                                    <FluentIcon Value="@(new Icons.Filled.Size16.Edit())" Color="@Color.Info" />
+                                </FluentButton>
+                                <FluentButton OnClick="(() => ShowRemoveDialog(log.TimeLogId))">
+                                    <FluentIcon Value="@(new Icons.Filled.Size16.Delete())"
+                                                Color="@Color.Info" />
+                                </FluentButton>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><b>Total Hours =</b></td>
+                    <td>@_timelogs.Sum(e => e.TotalHours)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 }
